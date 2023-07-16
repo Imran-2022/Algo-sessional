@@ -1,64 +1,29 @@
-/**
- * link: https://leetcode.com/problems/sort-an-array/
- * however will got timelimit exit with insertion sort 😐
- * as it's complexity O(n^2).
- * need to solve using O(nlogn) complexity max.
-
-class Solution {
-public:
-   vector<int> sortArray(vector<int>& nums) {
-    int n = nums.size();
-
-    for (int i = 1; i < n; i++) {
-        int j = i - 1;
-        int key = nums[i];
-
-        while (j >= 0 && nums[j] > key) {
-            nums[j+1] = nums[j];
-            j--;
-        }
-
-        nums[j+1] = key;
-    }
-
-    return nums;
-}
-};
-
-*/
-
-// complete solution :-
-
 #include <bits/stdc++.h>
 using namespace std;
 int main()
 {
-    int n, j;
+    int n;
     cin >> n;
-
-    vector<int> v(n);
-
+    int arr[n];
     for (int i = 0; i < n; i++)
     {
-        cin >> v[i];
+        cin >> arr[i];
     }
 
     for (int i = 1; i < n; i++)
     {
-        j = i - 1;
-        int tmp = v[i];
-        while (j >= 0 && v[j] > tmp)
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && key < arr[j])
         {
-            v[j + 1] = v[j];
+            arr[j + 1] = arr[j];
             j--;
         }
-        v[j + 1] = tmp;
+        arr[j + 1] = key;
     }
-
     for (int i = 0; i < n; i++)
     {
-        cout << v[i] << " ";
+        cout << arr[i] << " ";
     }
-
     return 0;
 }
