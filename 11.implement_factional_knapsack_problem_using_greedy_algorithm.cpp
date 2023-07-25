@@ -12,7 +12,8 @@ public:
     }
 };
 
-bool compareItemsByRatio(const Item& item1, const Item& item2) {
+bool compareItemsByRatio(const Item &item1, const Item &item2)
+{
     double ratio1 = static_cast<double>(item1.v) / item1.w;
     double ratio2 = static_cast<double>(item2.v) / item2.w;
     return ratio1 > ratio2;
@@ -29,18 +30,22 @@ public:
         items.push_back(Item(w, v));
     }
 
-    
-    double fractional_knapsack(int capacity) {
+    double fractional_knapsack(int capacity)
+    {
         sort(items.begin(), items.end(), compareItemsByRatio);
 
         double total_value = 0.0;
         int current_capacity = capacity;
 
-        for (const Item& item : items) {
-            if (current_capacity >= item.w) {
+        for (const Item &item : items)
+        {
+            if (current_capacity >= item.w)
+            {
                 total_value += item.v;
                 current_capacity -= item.w;
-            } else {
+            }
+            else
+            {
                 double fraction = static_cast<double>(current_capacity) / item.w;
                 total_value += fraction * item.v;
                 break;
@@ -53,8 +58,7 @@ public:
 
 int main()
 {
-    int capacity;
-    cin >> capacity;
+
     int n;
     cin >> n;
     Knapsack knapsack;
@@ -64,8 +68,10 @@ int main()
         cin >> w >> v;
         knapsack.addItem(w, v);
     }
+    int capacity;
+    cin >> capacity;
     double max_value = knapsack.fractional_knapsack(capacity);
 
-    cout << "Maximum value : " << max_value <<endl;
+    cout << "Maximum value : " << max_value << endl;
     return 0;
 }
