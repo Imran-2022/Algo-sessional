@@ -1,13 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/**
- * Heap Sort is a comparison-based sorting algorithm that uses the heap data structure to sort elements. The algorithm consists of two main steps: building a max-heap from the array and repeatedly extracting the maximum element from the heap and placing it at the end of the array.
-
-The heapify function is used to maintain the heap property. It takes an array, the size of the array, and the index of the root of the subtree as input. It compares the root element with its left and right children, finds the largest element among them, and swaps it with the root if necessary. After swapping, it recursively heapifies the affected subtree.
-
-The heapSort function first builds a max-heap from the array by calling heapify on each non-leaf node in a bottom-up manner. Then it repeatedly extracts the maximum element from the root (which is always the first element in the array after building the heap) and places it at the end of the array. It then reduces the size of the heap and heapifies the remaining elements.
-*/
 
 // Function to heapify a subtree rooted at 'rootIndex' in the array 'arrSize'
 void heapify(int arr[], int arrSize, int rootIndex)

@@ -1,51 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void merge(int *arr, int *leftsub, int mid, int *rightsub, int right)
+void merge(int *arr, int *leftsub, int left, int *righsub, int right)
 {
     int i = 0, j = 0, k = 0;
-    while (i < mid && j < right)
+    while (i < left && j < right)
     {
-        if (leftsub[i] < rightsub[j])
+        if (leftsub[i] < righsub[j])
         {
             arr[k++] = leftsub[i++];
         }
         else
         {
-            arr[k++] = rightsub[j++];
+            arr[k++] = righsub[j++];
         }
     }
-
-    while (i < mid)
+    while (i < left)
     {
         arr[k++] = leftsub[i++];
     }
     while (j < right)
     {
-        arr[k++] = rightsub[j++];
+        arr[k++] = righsub[i++];
     }
 }
 
-void mergeSort(int *arr, int n)
+void merge_sort(int *arr, int n)
 {
     if (n <= 1)
         return;
-
     int mid = n / 2;
     int leftsub[mid];
     int rightsub[n - mid];
-
     for (int i = 0; i < mid; i++)
     {
         leftsub[i] = arr[i];
     }
     for (int i = mid; i < n; i++)
     {
-        rightsub[i - mid] = arr[i];
+        rightsub[i-mid] = arr[i];
     }
 
-    mergeSort(leftsub, mid);
-    mergeSort(rightsub, n - mid);
+    merge_sort(leftsub, mid);
+    merge_sort(rightsub, n - mid);
     merge(arr, leftsub, mid, rightsub, n - mid);
 }
 
@@ -59,12 +56,11 @@ int main()
         cin >> arr[i];
     }
 
-    mergeSort(arr, n);
+    merge_sort(arr, n);
 
     for (int i = 0; i < n; i++)
     {
         cout << arr[i] << " ";
     }
-
     return 0;
 }

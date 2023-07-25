@@ -1,43 +1,82 @@
 #include <iostream>
-#include <queue>
+#include <vector>
 using namespace std;
 
-/**
- * A priority queue is an abstract data type that is similar to a queue but with each element having a priority assigned to it. The elements with higher priority are dequeued first. In C++, the std::priority_queue class template is used to implement a priority queue using a heap.
+class MaxHeap {
+private:
+    vector<int> heap;
 
-The std::priority_queue class provides various member functions, including push(), pop(), top(), and empty(), to perform operations on the priority queue.
+    void heapifyUp(int index) {
+        int parent = (index - 1) / 2;
+        while (index > 0 && heap[parent] < heap[index]) {
+            swap(heap[parent], heap[index]);
+            index = parent;
+            parent = (index - 1) / 2;
+        }
+    }
 
-In the example usage in the main function, a priority queue named pq is created using the priority_queue<int> syntax. Elements 30, 10, 50, 20, and 40 are inserted into the priority queue using the push() function.
+    void heapifyDown(int index) {
+        int n = heap.size();
+        int leftChild = 2 * index + 1;
+        int rightChild = 2 * index + 2;
+        int largest = index;
 
-The top() function is used to access the top (highest priority) element in the priority queue, which in this case is 50. It is printed using cout.
+        if (leftChild < n && heap[leftChild] > heap[largest])
+            largest = leftChild;
+        if (rightChild < n && heap[rightChild] > heap[largest])
+            largest = rightChild;
 
-Next, a loop is used to remove elements from the priority queue using the pop() function. The elements are printed using cout in the order of their priority (highest to lowest). The output will be 50 40 30 20 10.
+        if (largest != index) {
+            swap(heap[index], heap[largest]);
+            heapifyDown(largest);
+        }
+    }
 
-Finally, the program exits by returning 0.
+public:
+    bool isEmpty() const {
+        return heap.empty();
+    }
 
-This implementation demonstrates the usage of a priority queue as a max-heap. By default, std::priority_queue uses a max-heap, where the element with the highest priority (largest value) is always at the top.
-*/
+    int size() const {
+        return heap.size();
+    }
+
+    void push(int val) {
+        heap.push_back(val);
+        heapifyUp(heap.size() - 1);
+    }
+
+    int top() const {
+        if (!isEmpty()) {
+            return heap[0];
+        }
+        throw runtime_error("Priority queue is empty.");
+    }
+
+    void pop() {
+        if (!isEmpty()) {
+            heap[0] = heap.back();
+            heap.pop_back();
+            heapifyDown(0);
+        } else {
+            throw runtime_error("Priority queue is empty.");
+        }
+    }
+};
+
 int main() {
-    // Creating a priority queue
-    priority_queue<int> pq;
+    MaxHeap pq;
 
-    // Inserting elements into the priority queue
-    pq.push(30);
-    pq.push(10);
-    pq.push(50);
-    pq.push(20);
-    pq.push(40);
+    pq.push(5);
+    pq.push(3);
+    pq.push(8);
+    pq.push(1);
+    pq.push(2);
 
-    // Printing the top element of the priority queue
-    cout << "Top element: " << pq.top() << endl;
-
-    // Removing elements from the priority queue
-    cout << "Elements in priority queue: ";
-    while (!pq.empty()) {
+    while (!pq.isEmpty()) {
         cout << pq.top() << " ";
         pq.pop();
     }
-    cout << endl;
 
     return 0;
 }
